@@ -3,7 +3,7 @@
 #include<utility>
 #define ls (rt<<1)
 #define rs (rt<<1|1)
-#define MAXN 500000+1
+#define MAXN 500001
 
 using namespace std;
 
@@ -11,10 +11,9 @@ int n,q;
 int L[MAXN<<2], R[MAXN<<2];
 double sumx[MAXN<<2], sumy[MAXN<<2], sumxx[MAXN<<2], sumyy[MAXN<<2];
 //lazy tag
-double addx[MAXN<<2];
-double addy[MAXN<<2];
-double mulx[MAXN<<2];//init 1
-double muly[MAXN<<2];//init 1
+//矩阵matrix运算
+double addv[MAXN<<2][2];//(x, y)
+double mulv[MAXN<<2][4];//init: ((1,0); (0,1))
 
 void push_up(int rt){
     sumx[rt] = sumx[ls] + sumx[rs];
@@ -28,28 +27,10 @@ void push_up(int rt){
 //而不是 x = t*(x+s)
 //从而对后续程序也有影响
 void push_down(int rt){
-    double& mx = mulx[rt], & my = muly[rt], & ax= addx[rt], & ay = addy[rt];
-    addx[ls]*= mx;
-    addx[ls]+= ax;
-    addx[rs]*= mx;
-    addx[rs]+= ax;
-    addy[ls]*= my;
-    addy[ls]+= ay;
-    addy[rs]*= my;
-    addy[rs]+= ay;
-    mulx[ls]*= mx;
-    mulx[rs]*= mx;
-    muly[ls]*= my;
-    muly[rs]*= my;
-    ax = 0;
-    ay = 0;
-    mx = 1;
-    my = 1;
 }
 
 void update(int rt){
     int m = R[rt]-L[rt]+1;
-    double& mx = mulx[rt], & my = muly[rt], & ax= addx[rt], & ay = addy[rt];
     sumxx[rt] = mx*mx*sumxx[rt] + 2*ax*mx*sumx[rt] + ax*ax*m;
     sumyy[rt] = my*my*sumyy[rt] + 2*ay*my*sumy[rt] + ay*ay*m;
     sumx[rt] = sumx[rt] *mx + ax;
