@@ -48,20 +48,6 @@ void build(int rt, int l, int r){
     build(ls, mi+1, r);
     push_up(rt);
 }
-/* 
-
-$x' = t*x + s$
-$y' = c*y + d$
-$\sum_{i}^{m}x^2+\sum_{i}^{m}x^2 = $
-
-$\sum_{i}^{m}x = t*sum_{i}^{m}x + m*s$
-
-$sum_{i}^{m}y = c*sum_{i}^{m}y + m*d$
-/*
-    sum2[rt]+=(a*a+b*b)*(R[rt]-L[rt]+1)+2*a*sumx[rt]+2*b*sumy[rt];
-    sumx[rt]+=a*(R[rt]-L[rt]+1);
-    sumy[rt]+=b*(R[rt]-L[rt]+1);
-*/
 
 void op1(int rt, int  l, int r, double a, double b){
     if(L[rt]>r||R[rt]<l) return;
@@ -69,6 +55,7 @@ void op1(int rt, int  l, int r, double a, double b){
         addx[rt] += a;
         addy[rt] += b;
         update(rt);
+        return;
     }
     push_down(rt);
     int mi = L[rt] + (R[rt]-L[rt])>>1;
